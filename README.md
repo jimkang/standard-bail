@@ -46,25 +46,28 @@ Instead of:
 
 You can do:
 
-    var sb = require('standard-bail');
+    var StandardBail = require('standard-bail');
+    var sb = StandardBail({
+      log: myLogFunction // optional
+    });
 
     function doAThing(outerDone) {
-      someAPI(sb(log, successHandler, outerDone));
+      someAPI(sb(successHandler, outerDone));
 
-      function successHandler(result, otherThing) {
+      function successHandler(result, otherThing, done) {
           // Use result and otherThing in case in which someAPI call succeeded.
       }
     }
 
 Here, `successHandlers` doesn't worry about errors. `sb` will have already handled it in a way a jillion other errors are handled: by logging it and/or passing it to `done`.
 
-`sb` has three parameters, log, outerDone, and success. 
+`StandardBail` takes an opts object that currently has one property: `log`. Use it to tell it which function, if any, it should be logging with. The function should be ready to be passed two parameters: a message string and an error stack. It returns an `sb` function you can use to create your callbacks.
+
+`sb` has two parameters, success and outerDone.
 
 All are optional can be undefined or null. You really should have either a outerDone or a log, though, in order to avoid silent failures.
 
-`success` will be passed all of the non-error parameters passed to the callback. `outerDone` is the done callback passed to the outer function. `log` will be passed the error and the error stack to, presumably, log.
-
-If you want `log` to default to `console.log` (or any other log), you can use `lodash.curry` like so: `var sb = _.curry(require('standard-bail'))(console.log)`. (Keep in mind that `console.log` can causes problems in some cases, as it is synchronous. However, it's fine in a quite a few cases as well.)
+`success` will be passed all of the non-error parameters passed to the callback as well as whatever `outerDone` you provided.
 
 Tests
 -----
