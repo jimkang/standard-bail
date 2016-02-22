@@ -1,9 +1,23 @@
 standard-bail
 ==================
 
-An abstraction of the most basic kind of error handling callback.
+[![Build Status](https://travis-ci.org/jimkang/standard-bail.svg?branch=master)](https://travis-ci.org/jimkang/standard-bail)
+
+Makes callbacks that log and/or call the outer callback if there's an error so that you don't have to. An abstraction of the most typical kind of error handling callback.
 
 It creates a callback that checks for an error and if there is one, it (optionally) logs it and (optionally) passes it back to the `done` function. If there isn't, it calls the success handler function you've defined.
+
+Basically, you get to skip writing 
+
+    if (error) {
+      log(error, error.stack);
+      outerDone(error);
+    }
+    else {
+      …
+    }
+
+and get to just write whatever was in the else. (Obviously, don't use this if you have to handle an error in a special or different way.)
 
 It's just a way to DRY up callbacks a bit.
 
@@ -35,7 +49,7 @@ You can do:
     var sb = require('standard-bail');
 
     function doAThing(outerDone) {
-      someAPI(log, successHandler, outerDone));
+      someAPI(sb(log, successHandler, outerDone));
 
       function successHandler(result, otherThing) {
           // Use result and otherThing in case in which someAPI call succeeded.
