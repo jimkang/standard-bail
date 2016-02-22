@@ -1,6 +1,6 @@
 {
   "name": "standard-bail",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Makes callbacks that log and/or call the outer callback if there's an error so that you don't have to.",
   "main": "index.js",
   "scripts": {
