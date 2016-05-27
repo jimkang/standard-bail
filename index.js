@@ -9,7 +9,12 @@ function StandardBail(createOpts) {
     return function standardBailCallback(error) {
       if (error) {
         if (log) {
-          log(error, error.stack);
+          if (error.stack) {
+            log(error, error.stack);
+          }
+          else {
+            log(error);
+          }
         }
         if (outerCallback) {
           outerCallback(error);
