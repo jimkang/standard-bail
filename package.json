@@ -1,5 +1,5 @@
 {
-  "name": "standard-bail",
+  "name": "oknok",
   "version": "2.0.1",
   "description": "Makes callbacks that log and/or call the outer callback if there's an error so that you don't have to.",
   "main": "index.js",
@@ -8,18 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:jimkang/standard-bail.git"
+    "url": "git@github.com:jimkang/oknok.git"
   },
   "keywords": [],
   "author": "Jim Kang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jimkang/standard-bail/issues"
+    "url": "https://github.com/jimkang/oknok/issues"
   },
-  "homepage": "https://github.com/jimkang/standard-bail",
+  "homepage": "https://github.com/jimkang/oknok",
   "devDependencies": {
     "call-next-tick": "^1.1.2",
-    "tape": "^3.0.3"
+    "tape": "^4.11.0"
   },
   "dependencies": {}
 }

@@ -1,36 +1,24 @@
-function StandardBail(createOpts) {
-  var log;
-
-  if (createOpts) {
-    log = createOpts.log;
-  }
-
-  function createStandardBailCallback(success, outerCallback) {
-    return function standardBailCallback(error) {
-      if (error) {
-        if (log) {
-          if (error.stack) {
-            log(error, error.stack);
-          }
-          else {
-            log(error);
-          }
-        }
-        if (outerCallback) {
-          outerCallback(error);
+function createOKNOKCallback({ ok, nok, log = console.log }) {
+  return function standardBailCallback(error) {
+    if (error) {
+      if (log) {
+        if (error.stack) {
+          log(error, error.stack);
+        } else {
+          log(error);
         }
       }
-      else if (success) {
-        var successArgs = Array.prototype.slice.call(arguments, 1);
-        if (outerCallback) {
-          successArgs .push(outerCallback);
-        }
-        success.apply(success, successArgs);
+      if (nok) {
+        nok(error);
       }
-    };
-  }
-
-  return createStandardBailCallback;
+    } else if (ok) {
+      var okArgs = Array.prototype.slice.call(arguments, 1);
+      if (nok) {
+        okArgs.push(nok);
+      }
+      ok.apply(ok, okArgs);
+    }
+  };
 }
 
-module.exports = StandardBail;
+module.exports = createOKNOKCallback;
