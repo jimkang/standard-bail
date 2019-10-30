@@ -1,6 +1,6 @@
 {
   "name": "oknok",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Makes callbacks that log and/or call the outer callback if there's an error so that you don't have to.",
   "main": "index.js",
   "scripts": {
